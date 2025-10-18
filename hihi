@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tỏ Tình Anh Huy 💖</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: pink;
+      text-align: center;
+      padding: 30px;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    img {
+      width: 120px;
+      margin: 10px;
+    }
+    .question {
+      font-size: 22px;
+      margin: 20px 0;
+    }
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #ff69b4;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #ff1493;
+    }
+    .hidden {
+      display: none;
+    }
+    #finalMessage {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 80%;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="https://i.imgur.com/QpkkY1C.png" alt="Heart">
+    <img src="https://i.imgur.com/y2dEtrz.png" alt="Boy with ring">
+
+    <div id="quiz">
+      <div id="question" class="question"></div>
+      <div id="options" class="options"></div>
+    </div>
+
+    <div id="final" class="hidden">
+      <div class="question">Câu 5: Điền tên chồng vào đây ❤️</div>
+      <input type="text" id="husbandInput" placeholder="Ví dụ: anh Huy">
+      <br><br>
+      <button onclick="checkHusband()">Xác nhận</button>
+      <div id="finalMessage"></div>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Câu 1: Ai là người đẹp trai nhất trong tim em?",
+        options: {
+          A: "Bố",
+          B: "Anh trai",
+          C: "Chị gái",
+          D: "Anh Huy"
+        },
+        correct: "D"
+      },
+      {
+        question: "Câu 2: Em sẽ lấy ai?",
+        options: {
+          A: "Anh Huy",
+          B: "Kai",
+          C: "Anh cùng làng",
+          D: "Zai 18cm"
+        },
+        correct: "A"
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      for (const key in q.options) {
+        const btn = document.createElement("button");
+        btn.textContent = `${key}: ${q.options[key]}`;
+        btn.onclick = () => handleAnswer(key);
+        optionsDiv.appendChild(btn);
+      }
+    }
+
+    function handleAnswer(answer) {
+      if (answer === quizData[currentQuestion].correct) {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+          loadQuestion();
+        } else {
+          document.getElementById("quiz").classList.add("hidden");
+          document.getElementById("final").classList.remove("hidden");
+        }
+      } else {
+        alert("Sai rồi 😝. Chọn lại nha!");
+      }
+    }
+
+    function checkHusband() {
+      const input = document.getElementById("husbandInput").value.trim().toLowerCase();
+      const finalMsg = document.getElementById("finalMessage");
+
+      if (input === "a huy" || input === "anh huy") {
+        finalMsg.style.color = "green";
+        finalMsg.innerHTML = "🎉 Phần thưởng là: <b>ANH HUY</b> 💍 và 1 nhẫn kim cương 100000 tỷ!";
+      } else {
+        finalMsg.style.color = "red";
+        finalMsg.innerText = "🚫 Sai rồi! ĐI RA MẢ VƯỜN NHA!";
+      }
+    }
+
+    // Khởi động, load câu hỏi 1 đầu tiên
+    loadQuestion();
+  </script>
+</body>
+</html>
